@@ -1,13 +1,19 @@
-import {Link, Outlet} from 'react-router-dom';
-import {useUserContext} from '../hooks/ContextHooks';
+import { useContext } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import { useUserContext } from '../hooks/ContextHooks';
+import { SearchContext } from '../contexts/SearchProvider';
 
 const Layout = () => {
-  const {user, handleAutoLogin} = useUserContext();
+  const { user, handleAutoLogin } = useUserContext();
+  const searchContext = useContext(SearchContext);
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    searchContext?.setSearch(event.target.value);
+  }
 
   if (!user) {
     handleAutoLogin();
   }
-
   return (
     <>
       <header>
@@ -51,14 +57,14 @@ const Layout = () => {
                 <li>
                 <div className="ms-20 flex w-[100%] items-center justify-between">
                 <input
-                  type="search"
-                  className="relative m-0 block w-[1px] min-w-0 flex-auto rounded border border-solid border-secondary-500 bg-transparent bg-clip-padding px-20 py-1.5 
+                      type="search"
+                      className="relative m-0 block w-[1px] min-w-0 flex-auto rounded border border-solid border-secondary-500 bg-transparent bg-clip-padding px-20 py-1.5 
                   text-base font-normal text-black transition duration-300 ease-in-out focus:border-primary focus:text-gray-950 focus:shadow-inset focus:outline-none motion-reduce:transition-none dark:border-white/100 dark:bg-body-dark dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill"
-                  placeholder="Search"
-                  value= {searchvalue}
-                  onChange = HandleSearch
-                  aria-label="Search"
-                  aria-describedby="button-addon2" />
+                      placeholder="Search"
+                      value={searchContext?.search}
+                      onChange={(event) => handleSearch(event)}
+                      aria-label="Search"
+                      aria-describedby="button-addon2" />
                 <span
                  className="flex items-center whitespace-nowrap rounded pr-20 py-3.5 text-left text-base font-normal text-black dark:text-white [&>svg]:w-7"
                   id="basic-addon2">
@@ -67,9 +73,9 @@ const Layout = () => {
                   viewBox="0 0 20 20"
                     fill="currentColor">
                     <path
-                      fill-rule="evenodd"
+                      /*fill-rule="evenodd"
                       d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                  clip-rule="evenodd" />
+                  clip-rule="evenodd" *//>
         </svg>
       </span>
       </div>
@@ -101,3 +107,4 @@ const Layout = () => {
 };
 
 export default Layout;
+

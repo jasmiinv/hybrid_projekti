@@ -1,9 +1,19 @@
+import { useContext, useMemo } from 'react';
 import MediaRow from '../components/MediaRow';
-import {useMedia} from '../hooks/graphQLHooks';
+import { useMedia } from '../hooks/graphQLHooks';
 // import {useMedia} from '../hooks/apiHooks';
+import { SearchContext } from '../contexts/SearchProvider';
 
 const Home = () => {
-  const {mediaArray} = useMedia();
+  const { mediaArray } = useMedia();
+  const searchContext = useContext(SearchContext);
+
+  const filteredMediaArray = useMemo(() => {
+    if (searchContext?.search?.length! > 3) {
+      return mediaArray.filter((item) => item?.description?.includes(searchContext?.search || ''));
+    }
+    return mediaArray
+  },[searchContext?.search])
 
   return (
     <>
@@ -22,9 +32,12 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {mediaArray.map((item) => (
+    
+  
+          {filteredMediaArray.map((item) => (
             <MediaRow key={item.media_id} item={item} />
           ))}
+
         </tbody>
       </table>
     </>

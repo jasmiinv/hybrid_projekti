@@ -49,6 +49,7 @@ const useMedia = () => {
         GraphQLResponse<{mediaItems: MediaItemWithOwner[]}>,
         undefined
       >(query);
+
       setMediaArray(result.data.mediaItems);
     } catch (error) {
       console.error('getMedia failed', error);

@@ -9,12 +9,14 @@ import Logout from './views/Logout';
 import {UserProvider} from './contexts/UserContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import {UpdateProvider} from './contexts/UpdateContext';
+import {SearchProvider} from './contexts/SearchProvider';
 
 const App = () => {
   return (
     <Router basename={import.meta.env.BASE_URL}>
       <UserProvider>
         <UpdateProvider>
+          <SearchProvider>
           <Routes>
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
@@ -39,6 +41,7 @@ const App = () => {
               <Route path="/logout" element={<Logout />} />
             </Route>
           </Routes>
+          </SearchProvider>
         </UpdateProvider>
       </UserProvider>
     </Router>

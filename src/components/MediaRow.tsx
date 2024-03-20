@@ -19,13 +19,28 @@ const MediaRow = (props: {item: MediaItemWithOwner}) => {
       if (!token) {
         return;
       }
-      const result = await deleteMedia(item.media_id, token);
+      const result = await deleteMedia(item.media_id.toString(), token);
       alert(result.message);
       setUpdate(!update);
     } catch (e) {
       console.error('delete failed', (e as Error).message);
     }
   };
+
+  /*const SearchHandler (e: React.ChangeEvent<HTMLInputElement>) 
+  {
+  /*= async () => {
+
+    try {
+      this.setState({temperature: e.target.value});
+      //const result = await SearchMedia(item.media_id,);
+  
+      setUpdate(!update);
+    } catch (e) {
+      console.error('search failed', (e as Error).message);
+    }
+  };*/
+
 
   return (
     <tr className="*:p-4">
@@ -47,7 +62,7 @@ const MediaRow = (props: {item: MediaItemWithOwner}) => {
       <td className="border border-slate-700">
         {item.media_type.replace('&#x2F;', '/')}
       </td>
-      <td className="border border-slate-700">{item.owner.username}</td>
+      <td className="border border-slate-700">{item.username}</td>
       <td className="border border-slate-700">
         <div className="flex flex-col">
           <Link
@@ -75,7 +90,6 @@ const MediaRow = (props: {item: MediaItemWithOwner}) => {
               </>
             )}
         </div>
-        <p>Comments: {item.comments_count}</p>
       </td>
     </tr>
   );
